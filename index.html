@@ -242,6 +242,10 @@
   .s-layers .foot b{font-style:normal;font-weight:600;color:var(--accent)}
 
   /* ---------- 6 · OUR STACK ---------- */
+  .s-stack{}
+  .s-stack .jargon{position:absolute;top:2.3cqh;right:2.6cqw;max-width:24cqw;background:#fff;border:1px dashed var(--accent);border-radius:8px;padding:.85cqh 1cqw;font-family:var(--sans);font-size:.9cqw;line-height:1.32;color:var(--muted);box-shadow:0 3px 12px -6px rgba(20,20,19,.35);transform:rotate(1.4deg);z-index:6}
+  .s-stack .jargon .jx{display:block;font-weight:700;color:var(--accent);font-size:.82cqw;letter-spacing:.05em;text-transform:uppercase;margin-bottom:.3cqh}
+  .s-stack .jargon b{color:var(--ink);font-weight:600}
   .s-stack .head{margin-bottom:2cqh}
   .s-stack .eyebrow{color:var(--accent);margin-bottom:1.1cqh}
   .s-stack h2{font-family:var(--serif);font-weight:500;font-size:4.2cqw;line-height:1.04;letter-spacing:-.02em;font-variation-settings:'opsz' 120}
@@ -413,7 +417,7 @@
       </div>
       <div class="foot reveal" style="--d:.62s">
         <div class="spk">Gaurav Gupta <span class="aka">aka GG</span><small>CTO &amp; CMO · Allo Health</small></div>
-        <div class="ctx">[ host · date ]</div>
+        <div class="ctx">Verlinvest · 11 June 2026</div>
       </div>
     </section>
 
@@ -482,7 +486,7 @@
     <!-- 3 · CHAT vs INTEGRATED -->
     <section class="slide bone s-reframe frags" data-slide>
       <div class="eyebrow reveal" style="--d:.05s">The reframe</div>
-      <h2 class="reveal" style="--d:.14s">Stop visiting AI. Embed it.</h2>
+      <h2 class="reveal" style="--d:.14s">From visiting AI to embedding it.</h2>
       <div class="sub reveal" style="--d:.24s">Same model. The only difference is whether it can <b>see your business.</b></div>
       <div class="cmp">
         <div class="col visit reveal" style="--d:.3s">
@@ -549,7 +553,7 @@
         </div>
         <div class="lrow reveal" style="--d:3.9s">
           <div><div class="fn">Clinical efficiency</div><ul class="blist"><li>Decision support with explainability</li><li>Auto e-scribe notes for every consultation, no recordings</li><li>Drug-interaction checks</li></ul></div>
-          <div class="m"><div class="mv">90%+</div><div class="ml">improvement rates, every doctor</div></div>
+          <div class="m"><div class="mv">90%+</div><div class="ml">improvement rates over 8 weeks</div></div>
         </div>
       </div>
     </section>
@@ -629,6 +633,7 @@
           </div>
         </div>
       </div>
+      <div class="jargon reveal" style="--d:1.2s"><span class="jx">⚠ jargon alert</span>You'll hear <b>orchestrator</b>, <b>MCP</b>, <b>the harness</b>, <b>evals</b>, <b>Redshift</b>. Ask me, I'll translate every one into plain English.</div>
       <div class="foot reveal" style="--d:1s">The top three you plug in. <b>The context you build is the moat.</b> Compliant from day one, and we're still iterating fast.</div>
     </section>
 
@@ -730,17 +735,23 @@
     "<b>Frame it:</b> I'll cover how to build AI as leverage, rather than using it as a chatbot. I'm not here to convince anyone to use AI or not. I'll show how we use AI at Allo Health, what it looks like in steady state, and one piece of advice to get started. This is a 101, so I won't go too deep, but I'll cover the important parts of the how. (~20s)",
     "<b>Position yourself:</b> a builder who's been building for 16 years, at companies of every shape and size. A builder, not an AI consultant, here to share opinions and a journey, not a sales pitch. Let the timeline carry it; don't narrate every job. Land on the last node: today both CTO <i>and</i> CMO at Allo, and that dual seat is why AI sticks across the company. (~45s)",
     "<b>Introduce Allo.</b> Don't soften the category: quality care for the conditions people are ashamed to talk about, sexual and mental health in India, the most compliance-restricted category there is to market. Then the scale in one breath: 60+ clinics, 20+ cities, 400k+ patients, 5–7 new clinics a month. (~40s)",
-    "<b>The reframe: what doesn't work, then what does.</b> Left, watch a normal chatbot session: you ask, it gives generic gyan, asks for data, you upload, it asks for more. Smart, but blind to your business. Right, embedded: same question, it runs the diagnostic like a growth analyst, pulls the funnel (traffic and leads up, consults flat), names the root cause (Mumbai clinics closed through the rains), and dispatches the actions, supply team on the closures, lead-to-book on the lost bookings. Same model. The difference is data and context. (~2.5m)",
-    "<b>From there: we leverage AI in pretty much everything.</b> Read it like an org scorecard, every function, every metric a CXO cares about. Engineering 3× faster with zero hand-written code. Product on a single designer. Marketing: company-wide Google Ads by one person who'd never done ads, 11% more cost-efficient (spend 9.5% to 8.5% of revenue). Support lifted inbound conversion 7% with an expert-level chatbot. Clinical decision support holds 90%+ across every doctor, moving from sexual health into mental health. And we've barely scratched the surface. (~2.5m)",
+    "<b>The reframe: what doesn't work, then what does.</b> Left, watch a normal chatbot session: you ask, it gives generic gyan, asks for data, you upload, it asks for more. Smart, but blind to your business. Right, embedded: same question, it runs the diagnostic like a growth analyst, pulls the funnel (traffic and leads up, consults flat), and calls it a demand-<i>processing</i> problem, not demand generation. Two root causes on screen: an ongoing <b>availability gap</b> in those clinics, and a newly-launched MH service where one agent wrongly marked 20 leads 'not serviceable', a <b>training gap</b>. Then it dispatches all three: supply on the availability gaps, enablement to train the agent, lead-to-book to re-engage the 20 lost bookings. Same model. The difference is data and context. (~2m)",
+    "<b>From there: we leverage AI in pretty much everything.</b> Read it like an org scorecard, every function, every metric a CXO cares about. Engineering 3× faster with zero hand-written code. Product on a single designer. Marketing: company-wide Google Ads by one person who'd never done ads, 11% more cost-efficient (spend 9.5% to 8.5% of revenue). Support lifted inbound conversion 7% with an expert-level chatbot. Clinical decision support holds 90%+ improvement over 8 weeks, across every doctor, moving from sexual health into mental health. And we've barely scratched the surface. (~90s: land each row in one line, don't read the bullets)",
     "<b>Four layers. What to rent vs build, and why:</b><br><br><b>Intelligence (rent).</b> Frontier models are commoditized and improve monthly. Use them via API, stay model-swappable, never train your own. Zero moat here.<br><br><b>Tools (adopt).</b> Mostly rent: standard connectors and MCP servers for common systems. Build custom tools only for your proprietary actions. Low differentiation, don't over-invest.<br><br><b>Context (build, the #1 moat).</b> Your playbooks, standards, and your evals / feedback loop. It compounds, and only you can create it. Invest the most here.<br><br><b>Data (own).</b> You already own it. The job is access plus governance: expose it through tools (don't copy it into the AI), with a clean queryable layer and strict permissions / PII safety, critical in healthcare. Your proprietary data is a second moat.<br><br><b>Say:</b> rent the brain, adopt the hands, build the memory, own and open up the data. (~1.5m)",
     "<b>How we built it, in plain terms.</b> Claude Code is the orchestrator, the thing that runs the show. It calls Claude for the thinking. It has MCP tools to act in Google Ads, Meta, GMB. It stores all our know-how as Skills, and that's the moat: objectives, decision frameworks, strategies, playbooks, the harness, evals, data schemas. And it talks to our Redshift data with access control, so it's compliant by design. The point: a compliant setup that delivers value from day one. (~1m)",
     "<b>Live demo, the proof.</b> Open a brand-new Claude Code session, nothing up my sleeve. Type: 'Please analyze campaign funnels and suggest what all STD campaigns we can scale, and by how much?' When it comes back with campaigns A and B, reply 'go ahead and scale.' After it applies the change, ask it: 'for the query above, what all did you use for intelligence, tools, data and context?' so the room sees, live, exactly what's running behind the scenes. (the demo)",
-    "<b>The one thing: assign a champion.</b> This is the whole talk in one step. I championed it at Allo, and now the team does things that surprise me. The right person: first-principles thinking (the AI world is full of jargon, they distill the signal from the noise), deep expertise in your domain so they create impact from day one, an open mind, and technical is a plus but not required. Everything else, ship a use case at lower accuracy, reach value, onboard more, follows once the champion is in place. (~2m)",
+    "<b>Bridge from the demo:</b> that's the full stack, live. So where do you start? One person. <b>The one thing: assign a champion.</b> This is the whole talk in one step. I championed it at Allo, and now the team does things that surprise me. The right person: first-principles thinking (the AI world is full of jargon, they distill the signal from the noise), deep expertise in your domain so they create impact from day one, an open mind, and technical is a plus but not required. (~90s: name the four traits, don't pre-spend the slide-11 punch)",
     "<b>Steady state: it runs itself.</b> Example, a Google campaign: campaign, then data, improvement opportunities, actionables, change, live, and around again. Thousands of experiments at a scale and discipline a human can't match. AI runs it religiously. The loop is the moat. (~1m)",
     "<b>One advice: assign a champion.</b> Not a vendor, not a committee, one person who owns it and keeps asking 'what else could it do?' Do it this month. (~1m)",
     "<b>Thank you, over to questions.</b> Email is gg@allohealth.care. Then into Q&A and the live demo. (Q&A)"
   ];
-  let i=0, frag=0;
+  let i=0, frag=0, autoTimers=[];
+  const clearAuto=()=>{autoTimers.forEach(clearTimeout);autoTimers=[];};
+  // reframe slide auto-plays: left column at 3s, right column 5s after the left conversation finishes (~5.5s playtime)
+  function scheduleReframe(s){
+    autoTimers.push(setTimeout(()=>{if(s.classList.contains('is-active')){frag=1;applyFrags(s,1);}},3000));
+    autoTimers.push(setTimeout(()=>{if(s.classList.contains('is-active')){frag=2;applyFrags(s,2);startTrace(s);}},13500));
+  }
   const dots=document.getElementById('dots');
   const bm=document.querySelector('.brandmark');
   slides.forEach((_,n)=>{const d=document.createElement('div');d.className='dot'+(n===0?' on':'');d.onclick=()=>set(n);dots.appendChild(d)});
@@ -768,11 +779,12 @@
     document.getElementById('nb').innerHTML=notes[i];
     bm.classList.toggle('hidden', i===0);
     const s=slides[i];
-    if(s.classList.contains('frags')) applyFrags(s,0); else startTrace(s);
+    clearAuto();
+    if(s.classList.contains('frags')){applyFrags(s,0);scheduleReframe(s);} else startTrace(s);
   }
   function go(d){
     const s=slides[i];
-    if(d>0 && s.classList.contains('frags') && frag<fragMax(s)){frag++;applyFrags(s,frag);if(frag===2)startTrace(s);return;}
+    if(d>0 && s.classList.contains('frags') && frag<fragMax(s)){clearAuto();frag++;applyFrags(s,frag);if(frag===2)startTrace(s);return;}
     set(i+d);
   }
   let notesOn=false;
