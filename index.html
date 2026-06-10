@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Allo · AI as Leverage · 15-min talk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bone:#F5F4ED; --bone-2:#EEEDE3; --ink:#141413; --ink-soft:#33322E;
+    --accent:#D97757; --muted:#87867F; --border:#C2C0B6;
+    --allo:#6749A2; --allo-soft:#8A79B4;   /* Allo brand purple, lockup only */
+    --serif:'Fraunces', Georgia, serif;   /* Recoleta stand-in */
+    --sans:'Inter', system-ui, sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%}
+  body{background:#0c0c0b;font-family:var(--sans);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;min-height:100vh;overflow:hidden}
+  .stage{width:min(96vw, calc(94vh * 16 / 9));aspect-ratio:16/9;position:relative;
+    border-radius:12px;overflow:hidden;
+    box-shadow:0 40px 120px -30px rgba(0,0,0,.8), 0 0 0 1px rgba(255,255,255,.04)}
+  .slide{position:absolute;inset:0;container-type:size;padding:8cqh 8cqw 11cqh;
+    display:flex;flex-direction:column;opacity:0;visibility:hidden;transition:opacity .45s ease}
+  .slide.is-active{opacity:1;visibility:visible}
+  .reveal{opacity:0;transform:translateY(12px)}
+  .is-active .reveal{animation:rise .7s cubic-bezier(.2,.7,.2,1) forwards;animation-delay:var(--d,0s)}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @keyframes draw{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+  .eyebrow{font-family:var(--sans);font-weight:500;font-size:1.3cqw;letter-spacing:.34em;text-transform:uppercase}
+  .bone{background:var(--bone)} .dark{background:var(--ink);color:var(--bone)}
+
+  /* ---------- 0 · COVER ---------- */
+  .s-cover{justify-content:space-between;padding-bottom:8cqh}
+  .s-cover .ctop{display:flex;justify-content:space-between;align-items:flex-start;gap:3cqw}
+  .s-cover .cbrand{display:flex;align-items:center;gap:.9cqw}
+  .s-cover .cbrand img{height:3.2cqw;width:auto;display:block}
+  .s-cover .cbrand .bw{font-family:var(--serif);font-weight:600;font-size:1.7cqw;color:var(--allo);line-height:1.05}
+  .s-cover .cbrand .bt{font-family:var(--sans);font-size:1.05cqw;color:var(--allo-soft);max-width:26ch;line-height:1.3;margin-top:.3cqh}
+  .s-cover .ctag{font-family:var(--sans);font-weight:500;font-size:1.25cqw;letter-spacing:.3em;text-transform:uppercase;color:var(--accent)}
+  .s-cover .mid{margin-top:auto}
+  .s-cover .title{font-family:var(--serif);font-weight:600;font-size:9cqw;line-height:.98;letter-spacing:-.03em;color:var(--ink);font-variation-settings:'opsz' 144}
+  .s-cover .subtext{font-family:var(--serif);font-style:italic;font-weight:400;font-size:3.4cqw;color:var(--accent);margin-top:1.1cqh;line-height:1}
+  .s-cover .subtitle{font-family:var(--sans);font-size:1.95cqw;color:var(--ink-soft);margin-top:2.8cqh;max-width:44ch;line-height:1.5}
+  .s-cover .foot{display:flex;justify-content:space-between;align-items:flex-end;margin-top:5cqh;border-top:1px solid var(--border);padding-top:2.2cqh}
+  .s-cover .spk{font-family:var(--serif);font-weight:600;font-size:2.1cqw;color:var(--ink)}
+  .s-cover .spk small{display:block;font-family:var(--sans);font-weight:400;font-size:1.2cqw;color:var(--muted);margin-top:.5cqh;letter-spacing:.02em}
+  .s-cover .ctx{font-family:var(--sans);font-size:1.2cqw;color:var(--muted);letter-spacing:.06em;text-align:right}
+  /* persistent Allo brandmark footer (all slides except cover) */
+  .brandmark{position:absolute;left:8cqw;right:8cqw;bottom:3.2cqh;z-index:5;display:flex;align-items:center;gap:1cqw;border-top:1px solid var(--border);padding-top:1.5cqh}
+  .brandmark.hidden{display:none}
+  .brandmark img{height:2.3cqw;width:auto;display:block}
+  .brandmark .bw{font-family:var(--serif);font-weight:600;font-size:1.6cqw;color:var(--allo);letter-spacing:-.01em}
+  .brandmark .bt{font-family:var(--sans);font-size:1.15cqw;color:var(--allo-soft);letter-spacing:.02em;margin-left:auto}
+
+  /* ---------- 1 · JOURNEY (speaker intro + vertical logo timeline) ---------- */
+  .s-journey{flex-direction:row;gap:5.5cqw;align-items:stretch;padding:7cqh 8cqw 11cqh}
+  .s-journey .intro{flex:1;display:flex;flex-direction:column;justify-content:center}
+  .s-journey .portrait{width:8.5cqw;height:8.5cqw;border-radius:14px;background:var(--bone-2);border:1px solid var(--border);
+    display:flex;align-items:center;justify-content:center;color:var(--muted);font-family:var(--sans);font-size:.95cqw;
+    letter-spacing:.16em;text-transform:uppercase;text-align:center;margin-bottom:2.6cqh;overflow:hidden}
+  .s-journey .portrait img{width:100%;height:100%;object-fit:cover}
+  .s-journey .eyebrow{color:var(--accent);margin-bottom:1.5cqh}
+  .s-journey .nm{font-family:var(--serif);font-weight:600;font-size:4.6cqw;line-height:1;letter-spacing:-.02em;font-variation-settings:'opsz' 120}
+  .s-journey .rl{font-family:var(--sans);font-size:1.5cqw;color:var(--ink-soft);margin-top:1cqh;letter-spacing:.01em}
+  .s-journey .bio{font-family:var(--serif);font-style:italic;font-size:1.95cqw;line-height:1.35;color:var(--ink);margin-top:2.8cqh;max-width:26ch}
+  .s-journey .hl{list-style:none;margin-top:2.8cqh;display:flex;flex-direction:column;gap:1.05cqh}
+  .s-journey .hl li{font-family:var(--sans);font-size:1.4cqw;color:var(--ink-soft);padding-left:1.7cqw;position:relative}
+  .s-journey .hl li::before{content:"";position:absolute;left:0;top:.55em;width:.55cqw;height:.55cqw;border-radius:50%;background:var(--accent)}
+  .s-journey .hl li b{color:var(--ink);font-weight:600}
+
+  .timeline{flex:1.02;display:flex;flex-direction:column;justify-content:space-between;position:relative;padding:1.5cqh 0}
+  .timeline::before{content:"";position:absolute;left:2.1cqw;top:3.5cqh;bottom:3.5cqh;width:2px;background:var(--border);
+    transform-origin:top;animation:drawY 1.1s ease forwards}
+  @keyframes drawY{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+  .vstop{position:relative;display:grid;grid-template-columns:4.2cqw 1fr;gap:1.8cqw;align-items:center}
+  .vlogo{width:4.2cqw;height:4.2cqw;border-radius:11px;background:#fff;border:1px solid var(--border);
+    display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;z-index:1}
+  .vlogo::before{content:attr(data-m);font-family:var(--serif);font-weight:600;font-size:1.7cqw;color:var(--ink-soft)}
+  .vlogo.txt::before{font-size:1.25cqw;letter-spacing:.02em}
+  .vlogo img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:.7cqw;background:#fff}
+  .vstop.now .vlogo{border-color:var(--accent);box-shadow:0 0 0 4px rgba(217,119,87,.16)}
+  .vmeta .vyr{font-family:var(--sans);font-size:1.15cqw;color:var(--muted);letter-spacing:.06em}
+  .vmeta .vco{font-family:var(--serif);font-weight:600;font-size:2.2cqw;letter-spacing:-.01em;line-height:1.1;margin-top:.2cqh}
+  .vmeta .vrole{font-family:var(--sans);font-size:1.25cqw;color:var(--ink-soft);margin-top:.3cqh}
+  .vstop.now .vco{color:var(--accent)}
+
+  /* ---------- 2 · ALLO HEALTH (intro + scale) ---------- */
+  .s-allo{justify-content:center}
+  .s-allo .eyebrow{color:var(--accent);margin-bottom:2.4cqh}
+  .s-allo h2{font-family:var(--serif);font-weight:500;font-size:5.2cqw;line-height:1.07;letter-spacing:-.02em;max-width:21ch;font-variation-settings:'opsz' 120}
+  .s-allo h2 .hk{color:var(--accent);font-weight:600}
+  .s-allo .sub{font-family:var(--sans);font-size:1.85cqw;color:var(--ink-soft);margin-top:2.4cqh;max-width:52ch;line-height:1.5}
+  .s-allo .sub .hk{color:var(--ink);font-weight:600}
+  .scale{display:flex;gap:3.2cqw;margin-top:5cqh;border-top:1px solid var(--border);padding-top:3cqh}
+  .scale .st .n{font-family:var(--serif);font-weight:600;font-size:3.6cqw;letter-spacing:-.02em;color:var(--ink);line-height:1}
+  .scale .st .l{font-family:var(--sans);font-size:1.15cqw;color:var(--muted);letter-spacing:.03em;margin-top:.8cqh;max-width:13ch}
+
+  /* ---------- 3 · HOW WE USE AI (cross-functional) ---------- */
+  .s-aiuse .eyebrow{color:var(--accent);margin-bottom:1.1cqh}
+  .s-aiuse .ah{font-family:var(--serif);font-weight:500;font-size:3cqw;letter-spacing:-.01em;margin-bottom:3cqh}
+  .s-aiuse .ah em{font-style:italic;color:var(--accent)}
+  .agrid{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:1fr;gap:1.3cqw;flex:1}
+  .acard{border:1px solid var(--border);border-radius:9px;padding:2.1cqh 1.6cqw;background:var(--bone-2);display:flex;flex-direction:column}
+  .acard .fn{font-family:var(--sans);font-weight:600;font-size:1.1cqw;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+  .acard .wt{font-family:var(--sans);font-size:1.2cqw;color:var(--ink-soft);margin-top:.9cqh;line-height:1.4;flex:1}
+  .acard .im{font-family:var(--serif);font-weight:600;font-size:1.65cqw;color:var(--ink);margin-top:1.3cqh;line-height:1.12;letter-spacing:-.01em}
+  .acard .im b{color:var(--accent)}
+
+  /* ---------- 3 · THE NUMBER ---------- */
+  .s-number{justify-content:center}
+  .s-number .eyebrow{color:var(--muted)}
+  .bignum{font-family:var(--serif);font-weight:500;font-size:33cqw;line-height:.84;letter-spacing:-.035em;
+    margin:.08em 0 .06em -.015em;color:var(--accent);font-variation-settings:'opsz' 144}
+  .bignum .pct{color:var(--ink);font-weight:400}
+  .s-number .cap{font-family:var(--serif);font-style:italic;font-size:4cqw;color:var(--ink)}
+  .s-number .kicker{font-family:var(--sans);font-size:1.5cqw;letter-spacing:.02em;color:var(--muted);margin-top:3.4cqh}
+  .s-number .kicker b{color:var(--accent);font-weight:500}
+
+  /* ---------- 4 · VISIT vs EMBED ---------- */
+  .s-reframe .eyebrow{color:var(--accent);margin-bottom:1.8cqh}
+  .s-reframe h2{font-family:var(--serif);font-weight:500;font-size:5.4cqw;line-height:1.04;letter-spacing:-.02em;font-variation-settings:'opsz' 120}
+  .s-reframe .sub{font-family:var(--sans);font-size:1.6cqw;color:var(--ink-soft);margin-top:1.6cqh;max-width:54ch}
+  .s-reframe .sub b{color:var(--accent);font-weight:600}
+  .panels{display:grid;grid-template-columns:1fr 1fr;gap:2.4cqw;margin-top:4cqh;flex:1}
+  .panel{border-radius:10px;padding:3.4cqh 2.6cqw;display:flex;flex-direction:column;gap:1.4cqh}
+  .panel .ph{font-family:var(--sans);font-weight:500;font-size:1.2cqw;letter-spacing:.24em;text-transform:uppercase}
+  .panel .pt{font-family:var(--serif);font-weight:500;font-size:2.6cqw;line-height:1.1;letter-spacing:-.01em}
+  .panel .pd{font-family:var(--sans);font-size:1.35cqw;line-height:1.45}
+  .panel.visit{background:var(--bone-2);border:1px solid var(--border);color:var(--muted)}
+  .panel.visit .pt{color:var(--ink-soft)}
+  .panel.embed{background:var(--ink);color:var(--bone)}
+  .panel.embed .ph{color:var(--accent)}
+  .panel.embed .pd{color:rgba(245,244,237,.7)}
+  .diagram{margin-top:auto;display:flex;align-items:center;gap:1cqw;font-family:var(--sans);font-size:1.2cqw;flex-wrap:wrap}
+  .chip{padding:.7cqh 1cqw;border-radius:6px;font-weight:500;white-space:nowrap}
+  .visit .chip{background:#fff;border:1px solid var(--border);color:var(--muted)}
+  .embed .chip{background:rgba(217,119,87,.16);color:var(--accent)}
+  .arr{opacity:.5}
+
+  /* ---------- 5 · THREE LAYERS ---------- */
+  .s-layers .head{margin-bottom:3.6cqh}
+  .s-layers .eyebrow{color:var(--accent);margin-bottom:1.8cqh}
+  .s-layers h2{font-family:var(--serif);font-weight:500;font-size:6cqw;line-height:1.03;letter-spacing:-.02em;font-variation-settings:'opsz' 120}
+  .s-layers h2 em{font-style:italic;font-weight:400;color:var(--muted)}
+  .stack{display:flex;flex-direction:column;gap:1.2cqh;flex:1;justify-content:center}
+  .layer{display:grid;grid-template-columns:5cqw 1fr auto;align-items:center;gap:3cqw;padding:2.4cqh 3.2cqw;border-radius:8px}
+  .layer .lnum{font-family:var(--serif);font-size:2cqw;opacity:.5}
+  .layer .lname{font-family:var(--serif);font-weight:500;font-size:3.2cqw;letter-spacing:-.01em}
+  .layer .ldesc{font-family:var(--sans);font-size:1.55cqw;opacity:.72;margin-top:.4cqh}
+  .layer .ltag{font-family:var(--sans);font-weight:500;font-size:1.2cqw;letter-spacing:.2em;text-transform:uppercase;justify-self:end}
+  .layer.l-int{background:transparent;border:1px solid var(--border);color:var(--ink)}
+  .layer.l-int .ltag{color:var(--muted)}
+  .layer.l-ctx,.layer.l-data{background:var(--ink);color:var(--bone)}
+  .layer.l-ctx .ltag,.layer.l-data .ltag{color:var(--accent)}
+  .s-layers .foot{margin-top:3.4cqh;font-family:var(--serif);font-style:italic;font-size:2.4cqw}
+  .s-layers .foot b{font-style:normal;font-weight:600;color:var(--accent)}
+
+  /* ---------- 6 · A WEEK / DEMO ---------- */
+  .s-week{flex-direction:row;gap:4.5cqw;align-items:center}
+  .s-week .left{flex:.9}
+  .s-week .eyebrow{color:var(--accent);margin-bottom:1.6cqh}
+  .s-week .big{font-family:var(--serif);font-weight:600;font-size:9cqw;line-height:.9;letter-spacing:-.03em;font-variation-settings:'opsz' 144}
+  .s-week h2{font-family:var(--serif);font-weight:500;font-style:italic;font-size:3.2cqw;line-height:1.1;margin-top:1.4cqh}
+  .s-week .demo{display:inline-flex;align-items:center;gap:.8cqw;margin-top:3cqh;font-family:var(--sans);font-weight:600;
+    font-size:1.5cqw;color:var(--accent);letter-spacing:.02em}
+  .s-week .live{font-size:1cqw;letter-spacing:.2em;background:var(--accent);color:var(--bone);padding:.4cqh .8cqw;border-radius:5px;text-transform:uppercase}
+  .browser{flex:1.1;border:1px solid var(--border);border-radius:10px;overflow:hidden;background:#fff;box-shadow:0 20px 50px -28px rgba(20,20,19,.4)}
+  .browser .bar{background:var(--bone-2);padding:1.4cqh 1.4cqw;display:flex;gap:.6cqw;align-items:center;border-bottom:1px solid var(--border)}
+  .browser .bar i{width:.9cqw;height:.9cqw;border-radius:50%;background:var(--border)}
+  .browser .bar .u{margin-left:1cqw;font-family:var(--sans);font-size:1.05cqw;color:var(--muted)}
+  .dash{padding:2.4cqh 2cqw}
+  .dash .drow{display:flex;gap:1cqw;font-family:var(--sans);font-size:1.1cqw;color:var(--muted);margin-bottom:1.8cqh;letter-spacing:.04em}
+  .dash .drow b{color:var(--accent);font-weight:600}
+  .bars{display:flex;flex-direction:column;gap:1.1cqh}
+  .brow{display:grid;grid-template-columns:7cqw 1fr auto;align-items:center;gap:1cqw;font-family:var(--sans);font-size:1.05cqw}
+  .brow .bl{color:var(--ink-soft)}
+  .brow .bt{height:1.5cqh;border-radius:3px;background:var(--ink)}
+  .brow .bt.a{background:var(--accent)}
+  .brow .bv{font-family:var(--serif);font-weight:600;font-size:1.2cqw;color:var(--ink)}
+  .dash .note{font-family:var(--sans);font-size:.95cqw;color:var(--muted);margin-top:1.8cqh;font-style:italic}
+
+  /* ---------- 7 · WHAT IT TOOK ---------- */
+  .s-took{justify-content:center}
+  .s-took .eyebrow{color:var(--accent);margin-bottom:2.4cqh}
+  .s-took h2{font-family:var(--serif);font-weight:500;font-size:6.4cqw;line-height:1.04;letter-spacing:-.02em;max-width:80%;font-variation-settings:'opsz' 130}
+  .s-took h2 em{font-style:italic;font-weight:400;color:var(--accent)}
+  .chips{display:flex;gap:1.4cqw;margin-top:4cqh}
+  .tchip{border:1px solid var(--border);border-radius:7px;padding:1.6cqh 1.8cqw;font-family:var(--sans);font-size:1.4cqw;color:var(--ink-soft)}
+  .tchip b{color:var(--ink);font-weight:600}
+
+  /* ---------- 8 · THE ASK ---------- */
+  .s-ask{justify-content:center}
+  .s-ask .eyebrow{color:var(--accent);margin-bottom:5cqh}
+  .s-ask .line{font-family:var(--serif);font-weight:500;font-size:5.6cqw;line-height:1.1;letter-spacing:-.015em;
+    color:var(--ink);max-width:80%;font-variation-settings:'opsz' 120}
+  .s-ask .sub{font-family:var(--sans);font-size:2.2cqw;color:var(--muted);margin-top:2.4cqh;max-width:62%}
+  .s-ask .punch{font-family:var(--serif);font-weight:600;font-size:12.5cqw;line-height:.9;letter-spacing:-.03em;margin-top:4.6cqh;
+    color:var(--accent);font-variation-settings:'opsz' 144}
+
+  /* ---------- chrome + presenter notes ---------- */
+  .ui{position:fixed;z-index:10;font-family:var(--sans);letter-spacing:.04em}
+  .ui--note{left:18px;bottom:14px;font-size:11px;color:#6f6e67;max-width:50ch;line-height:1.5}
+  .ui--count{right:18px;bottom:14px;font-size:12px;letter-spacing:.16em;color:#9b9a91}
+  .ui--hint{right:18px;top:14px;font-size:11px;letter-spacing:.14em;color:#6f6e67}
+  .dots{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);display:flex;gap:8px;z-index:10}
+  .dot{width:6px;height:6px;border-radius:50%;background:#3a3a36;cursor:pointer;transition:.25s}
+  .dot.on{background:var(--accent);transform:scale(1.3)}
+  .nav-zone{position:fixed;top:0;bottom:0;width:16%;z-index:9;cursor:pointer}
+  .nav-zone.prev{left:0}.nav-zone.next{right:0}
+  #notes{position:fixed;left:0;right:0;bottom:0;z-index:20;background:rgba(12,12,11,.96);color:#e7e5db;
+    border-top:2px solid var(--accent);padding:18px 26px 20px;transform:translateY(100%);transition:transform .3s ease;
+    font-family:var(--sans);max-height:42vh;overflow:auto}
+  #notes.show{transform:none}
+  #notes .nh{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+  #notes .nb{font-size:15px;line-height:1.6;max-width:95ch}
+  #notes .nb b{color:#fff}
+</style>
+</head>
+<body>
+  <div class="stage" id="stage">
+
+    <!-- 0 · COVER -->
+    <section class="slide bone s-cover is-active" data-slide>
+      <div class="ctop reveal" style="--d:.05s">
+        <div class="ctag">A 101, not a deep dive</div>
+        <div class="cbrand"><img src="assets/logos/allo.png" alt="Allo Health"><div><div class="bw">Allo Health</div><div class="bt">India's Largest Chain of Sexual &amp; Mental Health Clinics</div></div></div>
+      </div>
+      <div class="mid">
+        <div class="title reveal" style="--d:.16s">Building AI as leverage</div>
+        <div class="subtext reveal" style="--d:.32s">Not a chatbot.</div>
+        <div class="subtitle reveal" style="--d:.46s">What the potential really looks like, the high-level path to get there, and the first step you can take.</div>
+      </div>
+      <div class="foot reveal" style="--d:.62s">
+        <div class="spk">Gaurav Gupta<small>CTO &amp; CMO · Allo Health</small></div>
+        <div class="ctx">[ host · date ]</div>
+      </div>
+    </section>
+
+    <!-- 1 · JOURNEY -->
+    <section class="slide bone s-journey" data-slide>
+      <div class="intro">
+        <div class="portrait reveal" style="--d:.05s"><img src="assets/gg.jpg" alt="Gaurav Gupta"></div>
+        <div class="eyebrow reveal" style="--d:.12s">Speaker</div>
+        <div class="nm reveal" style="--d:.18s">Gaurav Gupta</div>
+        <div class="rl reveal" style="--d:.26s">CTO &amp; CMO · Allo Health</div>
+        <div class="bio reveal" style="--d:.36s">Fifteen years a builder: engineer, founder, operator.</div>
+        <ul class="hl">
+          <li class="reveal" style="--d:.48s">IIT, Computer Science</li>
+          <li class="reveal" style="--d:.55s">Engineer at <b>IBM</b> &amp; <b>Amazon</b></li>
+          <li class="reveal" style="--d:.62s">Founding engineer &amp; CTO, <b>YC W12</b></li>
+          <li class="reveal" style="--d:.69s">Today: <b>CTO &amp; CMO</b>, builds the tech and runs the growth</li>
+        </ul>
+      </div>
+      <div class="timeline">
+        <div class="vstop reveal" style="--d:.5s">
+          <span class="vlogo txt" data-m="IIT"></span>
+          <div class="vmeta"><div class="vyr">2010</div><div class="vco">IIT</div><div class="vrole">Computer Science</div></div>
+        </div>
+        <div class="vstop reveal" style="--d:.6s">
+          <span class="vlogo" data-m="IBM"><img src="assets/logos/ibm.png" alt="" onerror="this.style.display='none'"></span>
+          <div class="vmeta"><div class="vyr">2010–11</div><div class="vco">IBM</div><div class="vrole">Software engineer</div></div>
+        </div>
+        <div class="vstop reveal" style="--d:.7s">
+          <span class="vlogo" data-m="A"><img src="assets/logos/amazon.png" alt="" onerror="this.style.display='none'"></span>
+          <div class="vmeta"><div class="vyr">2011–13</div><div class="vco">Amazon</div><div class="vrole">Software engineer</div></div>
+        </div>
+        <div class="vstop reveal" style="--d:.8s">
+          <span class="vlogo" data-m="E"><img src="assets/logos/eligible.jpg" alt="" onerror="this.style.display='none'"></span>
+          <div class="vmeta"><div class="vyr">2013–21</div><div class="vco">Eligible</div><div class="vrole">Founding engineer &amp; CTO · YC W12</div></div>
+        </div>
+        <div class="vstop reveal" style="--d:.9s">
+          <span class="vlogo" data-m="C"><img src="assets/logos/carbon.png" alt="" onerror="this.style.display='none'"></span>
+          <div class="vmeta"><div class="vyr">2021–22</div><div class="vco">Carbon Health</div><div class="vrole">Engineering leadership</div></div>
+        </div>
+        <div class="vstop now reveal" style="--d:1s">
+          <span class="vlogo" data-m="A"><img src="assets/logos/allo.png" alt="" onerror="this.style.display='none'"></span>
+          <div class="vmeta"><div class="vyr">2022–now</div><div class="vco">Allo Health</div><div class="vrole">CTO &amp; CMO</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 · ALLO HEALTH (intro + scale) -->
+    <section class="slide bone s-allo" data-slide>
+      <div class="eyebrow reveal" style="--d:.05s">Allo Health</div>
+      <h2 class="reveal" style="--d:.14s"><span class="hk">Quality care</span> for the conditions people are <span class="hk">ashamed</span> to talk about.</h2>
+      <div class="sub reveal" style="--d:.3s">Sexual health and mental health: the <span class="hk">most compliance-restricted, most-abused category to market</span> in India.</div>
+      <div class="scale">
+        <div class="st reveal" style="--d:.5s"><div class="n">60+</div><div class="l">clinics</div></div>
+        <div class="st reveal" style="--d:.57s"><div class="n">20+</div><div class="l">cities</div></div>
+        <div class="st reveal" style="--d:.64s"><div class="n">3</div><div class="l">categories</div></div>
+        <div class="st reveal" style="--d:.71s"><div class="n">5–7</div><div class="l">new clinics / month</div></div>
+        <div class="st reveal" style="--d:.78s"><div class="n">400k+</div><div class="l">patients · 4.8★</div></div>
+      </div>
+    </section>
+
+    <!-- 3 · HOW WE USE AI (cross-functional) -->
+    <section class="slide bone s-aiuse" data-slide>
+      <div class="eyebrow reveal" style="--d:.05s">How we use AI</div>
+      <div class="ah reveal" style="--d:.12s">Not in one corner. <em>In every function.</em></div>
+      <div class="agrid">
+        <div class="acard reveal" style="--d:.3s"><div class="fn">Engineering</div><div class="wt">No code written by hand in 2 months. Autonomous workflows run the build.</div><div class="im"><b>3×</b> feature velocity</div></div>
+        <div class="acard reveal" style="--d:.37s"><div class="fn">Product</div><div class="wt">Every stakeholder prototypes with AI; design is looped in only to fine-tune.</div><div class="im"><b>1 designer</b> for the whole org</div></div>
+        <div class="acard reveal" style="--d:.44s"><div class="fn">Marketing</div><div class="wt">Google, Meta &amp; GMB at scale; landing pages and content, generated.</div><div class="im"><b>[−X%]</b> cost of revenue</div></div>
+        <div class="acard reveal" style="--d:.51s"><div class="fn">Support</div><div class="wt">Inbound call audits; a WhatsApp chatbot, continuously audited for gaps.</div><div class="im"><b>+7%</b> inbound conversion · expert-level chatbot</div></div>
+        <div class="acard reveal" style="--d:.58s"><div class="fn">Clinical efficiency</div><div class="wt">Decision support with explainability, outcome summaries, drug-interaction checks.</div><div class="im"><b>90%+</b> improvement, every doctor</div></div>
+        <div class="acard reveal" style="--d:.65s"><div class="fn">Data &amp; analytics</div><div class="wt">Self-serve insight across the company, channel to city to category.</div><div class="im">No <b>analyst queue</b></div></div>
+      </div>
+    </section>
+
+    <!-- 4 · VISIT vs EMBED -->
+    <section class="slide bone s-reframe" data-slide>
+      <div class="eyebrow reveal" style="--d:.05s">The reframe</div>
+      <h2 class="reveal" style="--d:.14s">Stop visiting AI. Embed it.</h2>
+      <div class="sub reveal" style="--d:.26s">Once it lives inside the work, the ceiling stops being the technology. <b>It becomes your imagination.</b></div>
+      <div class="panels">
+        <div class="panel visit reveal" style="--d:.42s">
+          <div class="ph">Most teams today</div>
+          <div class="pt">A place you visit</div>
+          <div class="pd">You go to a chatbot, brainstorm, copy the answer back out. Useful, but it never touches the business.</div>
+          <div class="diagram"><span class="chip">you</span><span class="arr">→</span><span class="chip">chat</span><span class="arr">→</span><span class="chip">you</span></div>
+        </div>
+        <div class="panel embed reveal" style="--d:.56s">
+          <div class="ph">The unlock</div>
+          <div class="pt">An operator inside</div>
+          <div class="pd">AI that lives in your operation, sees your data, knows your context, and does the work.</div>
+          <div class="diagram"><span class="chip">data</span><span class="arr">→</span><span class="chip">AI</span><span class="arr">→</span><span class="chip">work shipped</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 · THREE LAYERS -->
+    <section class="slide bone s-layers" data-slide>
+      <div class="head">
+        <div class="eyebrow reveal" style="--d:.05s">The model</div>
+        <h2 class="reveal" style="--d:.14s">Three simple things,<br><em>and the AI is the easy part.</em></h2>
+      </div>
+      <div class="stack">
+        <div class="layer l-int reveal" style="--d:.6s">
+          <span class="lnum">03</span>
+          <span><span class="lname">Intelligence</span><div class="ldesc">the brain: reasons over everything, and acts</div></span>
+          <span class="ltag">rent it</span>
+        </div>
+        <div class="layer l-ctx reveal" style="--d:.44s">
+          <span class="lnum">02</span>
+          <span><span class="lname">Context</span><div class="ldesc">the memory: your playbooks, how you decide</div></span>
+          <span class="ltag">build · own</span>
+        </div>
+        <div class="layer l-data reveal" style="--d:.28s">
+          <span class="lnum">01</span>
+          <span><span class="lname">Data</span><div class="ldesc">the eyes: every system, connected</div></span>
+          <span class="ltag">build · own</span>
+        </div>
+      </div>
+      <div class="foot reveal" style="--d:.78s">You rent the top. You <b>build and own</b> the bottom two.</div>
+    </section>
+
+    <!-- 6 · A WEEK / DEMO -->
+    <section class="slide bone s-week" data-slide>
+      <div class="left">
+        <div class="eyebrow reveal" style="--d:.05s">Velocity</div>
+        <div class="big reveal" style="--d:.16s">7 days</div>
+        <h2 class="reveal" style="--d:.34s">This didn't exist<br>last week.</h2>
+        <div class="demo reveal" style="--d:.55s"><span class="live">Live</span> let me show you →</div>
+      </div>
+      <div class="browser reveal" style="--d:.4s">
+        <div class="bar"><i></i><i></i><i></i><span class="u">demand-dashboard · channel ▸ city ▸ category</span></div>
+        <div class="dash">
+          <div class="drow">Channel <b>›</b> City <b>›</b> Category · drill any cut</div>
+          <div class="bars">
+            <div class="brow"><span class="bl">Google</span><span class="bt a" style="width:88%"></span><span class="bv">1,240</span></div>
+            <div class="brow"><span class="bl">GMB</span><span class="bt" style="width:64%"></span><span class="bv">910</span></div>
+            <div class="brow"><span class="bl">Meta</span><span class="bt" style="width:41%"></span><span class="bv">580</span></div>
+            <div class="brow"><span class="bl">Organic</span><span class="bt" style="width:27%"></span><span class="bv">390</span></div>
+          </div>
+          <div class="note">representative · real dashboard frame swapped in for the live demo</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7 · WHAT IT TOOK -->
+    <section class="slide bone s-took" data-slide>
+      <div class="eyebrow reveal" style="--d:.05s">Demystify</div>
+      <h2 class="reveal" style="--d:.16s">Not a moonshot. The only hard part is the part <em>only your people can do.</em></h2>
+      <div class="chips">
+        <div class="tchip reveal" style="--d:.5s"><b>Small team</b></div>
+        <div class="tchip reveal" style="--d:.58s"><b>Weeks</b>, not years</div>
+        <div class="tchip reveal" style="--d:.66s">Tools you <b>already have</b></div>
+        <div class="tchip reveal" style="--d:.74s">The work: your <b>data</b> + your <b>context</b></div>
+      </div>
+    </section>
+
+    <!-- 8 · THE ASK -->
+    <section class="slide bone s-ask" data-slide>
+      <div class="eyebrow reveal" style="--d:.05s">The ask</div>
+      <div class="line reveal" style="--d:.2s">Pick the person who owns this.</div>
+      <div class="sub reveal" style="--d:.46s">The one who keeps asking, "what else could it do?"</div>
+      <div class="punch reveal" style="--d:.7s">This month.</div>
+    </section>
+
+    <div class="brandmark hidden">
+      <img src="assets/logos/allo.png" alt="Allo Health">
+      <span class="bw">Allo Health</span>
+      <span class="bt">India's Largest Chain of Sexual &amp; Mental Health Clinics</span>
+    </div>
+  </div>
+
+  <div class="nav-zone prev" onclick="go(-1)"></div>
+  <div class="nav-zone next" onclick="go(1)"></div>
+  <div class="ui ui--note">Direction build · brand-studio system · Recoleta via Fraunces · numbers placeholder · press N for notes</div>
+  <div class="ui ui--hint">← → MOVE · N NOTES</div>
+  <div class="ui ui--count"><span id="cur">1</span> / 9</div>
+  <div class="dots" id="dots"></div>
+  <div id="notes"><div class="nh">Speaker note · slide <span id="ns">1</span></div><div class="nb" id="nb"></div></div>
+
+<script>
+  const slides=[...document.querySelectorAll('[data-slide]')];
+  const notes=[
+    "<b>Title card.</b> Set the frame in one breath: \"This isn't about chatbots. It's about AI as leverage. This is a 101: I'll show you what the potential looks like, the high-level path, and the first step. Not a deep technical how.\" Then move. (~15s)",
+    "<b>Open with the line:</b> \"I'm not a consultant telling you what's possible. I'm a builder, this is just what we've shipped.\" Let the timeline speak; don't narrate every job. Trace the arc: engineer at IBM &amp; Amazon, founder/CTO through YC, then operator. Land on the last node: today both CTO <i>and</i> CMO at Allo, and that dual seat is why AI sticks across the company. (~45s)",
+    "<b>Introduce Allo.</b> Don't soften the category: quality care for the conditions people are ashamed to talk about, sexual and mental health in India, the most compliance-restricted category there is to market. Then the scale in one breath: 60+ clinics, 20+ cities, 400k+ patients, 5–7 new clinics a month. (~40s)",
+    "<b>The proof, distributed.</b> AI runs across every function, and each one has a real result: engineering ships 3× faster with no hand-written code; product prototypes with AI on one designer; marketing runs every channel at scale; support lifted inbound conversion 7% and runs an expert-level sexual-health chatbot; clinical decision support holds 90%+ improvement across every doctor, and those protocols are moving from sexual health into mental health. Don't read every card, land the two or three that hit hardest for this room. (~2.5m)",
+    "<b>Why most of you haven't seen numbers like that.</b> Most AI use is the left panel: visit a chatbot, brainstorm, copy out. Useful, but it's a place you go. The unlock is the right: AI that lives inside the operation, sees your data, does the work. Once embedded, the ceiling stops being the tech; it becomes your imagination. (~2m)",
+    "<b>It's just three simple things.</b> Data: the eyes, every system connected. Context: the memory, your playbooks. Intelligence: the brain that reasons and acts. <b>Punchline:</b> the intelligence is a commodity, everyone rents the same one. The two layers you build and own, data &amp; context, that's the moat. (~1.5m)",
+    "<b>Once the layers exist, the next thing is cheap.</b> This dashboard didn't exist last week: one person, one week. Now anyone goes channel → city → category and sees where demand moves and why. <b>\"Let me actually show you.\"</b> → switch to the live dashboard. (~2m + demo)",
+    "<b>Quick honesty.</b> I know you're thinking 'big team, big budget, a year.' No. Small team, weeks not years, tools you already have. The hard part was never the AI; it was connecting our data and encoding how we think. And that part only your people can do. (~1.5m)",
+    "<b>The ask.</b> Pick the person who owns this: not a vendor, not a committee. One person who keeps asking 'what else could it do?' Connect data, encode context, let it run, it compounds. Not a cost-center experiment; a margin play. <b>Pick your person. This month.</b> (~1.5m)"
+  ];
+  let i=0;
+  const dots=document.getElementById('dots');
+  const bm=document.querySelector('.brandmark');
+  slides.forEach((_,n)=>{const d=document.createElement('div');d.className='dot'+(n===0?' on':'');d.onclick=()=>set(n);dots.appendChild(d)});
+  function set(n){
+    i=(n+slides.length)%slides.length;
+    slides.forEach((s,k)=>s.classList.toggle('is-active',k===i));
+    [...dots.children].forEach((d,k)=>d.classList.toggle('on',k===i));
+    document.getElementById('cur').textContent=i+1;
+    document.getElementById('ns').textContent=i+1;
+    document.getElementById('nb').innerHTML=notes[i];
+    bm.classList.toggle('hidden', i===0);
+  }
+  function go(d){set(i+d)}
+  let notesOn=false;
+  addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key===' ')go(1);
+    if(e.key==='ArrowLeft')go(-1);
+    if(e.key.toLowerCase()==='n'){notesOn=!notesOn;document.getElementById('notes').classList.toggle('show',notesOn)}
+  });
+  set(0);
+</script>
+</body>
+</html>
