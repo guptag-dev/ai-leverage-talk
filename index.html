@@ -26,11 +26,16 @@
     display:flex;flex-direction:column;opacity:0;visibility:hidden;transition:opacity .45s ease}
   .slide.is-active{opacity:1;visibility:visible}
   .reveal{opacity:0;transform:translateY(12px)}
-  .is-active .reveal{animation:rise .7s cubic-bezier(.2,.7,.2,1) forwards;animation-delay:var(--d,0s)}
+  .is-active:not(.frags) .reveal{animation:rise .7s cubic-bezier(.2,.7,.2,1) forwards;animation-delay:var(--d,0s)}
+  .frags .reveal.show{animation:rise .7s cubic-bezier(.2,.7,.2,1) forwards;animation-delay:var(--d,0s)}
   @keyframes rise{to{opacity:1;transform:none}}
   @keyframes draw{from{transform:scaleX(0)}to{transform:scaleX(1)}}
   .eyebrow{font-family:var(--sans);font-weight:500;font-size:1.3cqw;letter-spacing:.34em;text-transform:uppercase}
   .bone{background:var(--bone)} .dark{background:var(--ink);color:var(--bone)}
+
+  /* slides 2 & 3: show in one shot, no stagger */
+  .s-cover .reveal,.s-journey .reveal,.s-allo .reveal,.s-aiuse .reveal,.s-layers .reveal,.s-stack .reveal,.s-demo .reveal,.s-path .reveal,.s-loop .reveal,.s-ask .reveal,.s-thanks .reveal{opacity:1!important;transform:none!important;animation:none!important}
+  .s-journey .timeline::before{animation:none}
 
   /* ---------- 0 · COVER ---------- */
   .s-cover{justify-content:space-between;padding-bottom:8cqh}
@@ -64,6 +69,7 @@
   .s-journey .portrait img{width:100%;height:100%;object-fit:cover}
   .s-journey .eyebrow{color:var(--accent);margin-bottom:1.5cqh}
   .s-journey .nm{font-family:var(--serif);font-weight:600;font-size:4.6cqw;line-height:1;letter-spacing:-.02em;font-variation-settings:'opsz' 120}
+  .aka{font-size:.46em;color:var(--accent);font-weight:500;font-style:italic;letter-spacing:0}
   .s-journey .rl{font-family:var(--sans);font-size:1.5cqw;color:var(--ink-soft);margin-top:1cqh;letter-spacing:.01em}
   .s-journey .bio{font-family:var(--serif);font-style:italic;font-size:1.95cqw;line-height:1.35;color:var(--ink);margin-top:2.8cqh;max-width:26ch}
   .s-journey .hl{list-style:none;margin-top:2.8cqh;display:flex;flex-direction:column;gap:1.05cqh}
@@ -97,7 +103,7 @@
   .s-allo .sub .hk{color:var(--ink);font-weight:600}
   .allo-top .photo{border-radius:12px;overflow:hidden;border:1px solid var(--border);box-shadow:0 16px 44px -22px rgba(20,20,19,.4);aspect-ratio:4/3}
   .allo-top .photo img{width:100%;height:100%;object-fit:cover;display:block}
-  .scale{display:flex;gap:3.2cqw;margin-top:5cqh;border-top:1px solid var(--border);padding-top:3cqh}
+  .scale{display:flex;justify-content:space-between;gap:2cqw;margin-top:5cqh;border-top:1px solid var(--border);padding-top:3cqh}
   .scale .st .n{font-family:var(--serif);font-weight:600;font-size:3.6cqw;letter-spacing:-.02em;color:var(--ink);line-height:1}
   .scale .st .l{font-family:var(--sans);font-size:1.15cqw;color:var(--muted);letter-spacing:.03em;margin-top:.8cqh;max-width:13ch}
 
@@ -108,15 +114,14 @@
   .s-aiuse .subnote{font-family:var(--sans);font-size:1.3cqw;color:var(--muted);margin-bottom:2.2cqh}
   .ledger{display:flex;flex-direction:column;flex:1}
   .lrow{flex:1;display:grid;grid-template-columns:1fr auto;align-items:center;gap:3cqw;border-top:1px solid var(--border)}
-  .lrow:last-child{border-bottom:1px solid var(--border)}
   .lrow .fn{font-family:var(--serif);font-weight:600;font-size:2cqw;letter-spacing:-.01em;color:var(--ink)}
   .lrow .blist{margin-top:.6cqh;display:flex;flex-direction:column;gap:.35cqh}
   .lrow .blist li{list-style:none;position:relative;padding-left:1.4cqw;font-family:var(--sans);font-size:1.12cqw;color:var(--muted);line-height:1.28}
   .lrow .blist li::before{content:"";position:absolute;left:.2cqw;top:.5em;width:.42cqw;height:.42cqw;border-radius:50%;background:var(--accent);opacity:.7}
-  .lrow .m{text-align:right;white-space:nowrap}
-  .lrow .m .mv{font-family:var(--serif);font-weight:600;font-size:2.5cqw;letter-spacing:-.02em;color:var(--accent);line-height:1}
+  .lrow .m{text-align:right}
+  .lrow .m .mv{font-family:var(--serif);font-weight:600;font-size:2.5cqw;letter-spacing:-.02em;color:var(--accent);line-height:1;white-space:nowrap}
   .lrow .m .mv .ar{color:var(--muted);font-size:.62em;font-weight:400;padding:0 .12em}
-  .lrow .m .ml{font-family:var(--sans);font-size:1.05cqw;color:var(--muted);letter-spacing:.02em;margin-top:.55cqh}
+  .lrow .m .ml{font-family:var(--sans);font-size:1.05cqw;color:var(--muted);letter-spacing:.02em;margin-top:.55cqh;max-width:20cqw;margin-left:auto}
 
   /* ---------- 3 · THE NUMBER ---------- */
   .s-number{justify-content:center}
@@ -155,7 +160,8 @@
   .typing i:nth-child(2){animation-delay:.18s}
   .typing i:nth-child(3){animation-delay:.36s}
   @keyframes blink{0%,60%,100%{opacity:.3}30%{opacity:1}}
-  .is-active .typing{animation:think var(--td,1s) ease forwards;animation-delay:var(--d,0s)}
+  .is-active:not(.frags) .typing{animation:think var(--td,1s) ease forwards;animation-delay:var(--d,0s)}
+  .frags .typing.show{animation:think var(--td,1s) ease forwards;animation-delay:var(--d,0s)}
   @keyframes think{0%{opacity:0;transform:translateY(6px)}16%{opacity:1;transform:none}80%{opacity:1;max-height:6cqh}100%{opacity:0;max-height:0;margin:0;padding-top:0;padding-bottom:0;border-width:0}}
   .dq{font-family:var(--serif);font-weight:600;font-size:1.55cqw;color:var(--ink);line-height:1.18;margin-bottom:1.4cqh}
   .diag{display:flex;flex-direction:column;gap:1.1cqh}
@@ -215,22 +221,59 @@
   .keyobs b{color:var(--accent);font-weight:600}
 
   /* ---------- 5 · THREE LAYERS ---------- */
-  .s-layers .head{margin-bottom:3.6cqh}
-  .s-layers .eyebrow{color:var(--accent);margin-bottom:1.8cqh}
-  .s-layers h2{font-family:var(--serif);font-weight:500;font-size:6cqw;line-height:1.03;letter-spacing:-.02em;font-variation-settings:'opsz' 120}
+  .s-layers .head{margin-bottom:2.2cqh}
+  .s-layers .eyebrow{color:var(--accent);margin-bottom:1.4cqh}
+  .s-layers h2{font-family:var(--serif);font-weight:500;font-size:4.8cqw;line-height:1.03;letter-spacing:-.02em;font-variation-settings:'opsz' 120}
   .s-layers h2 em{font-style:italic;font-weight:400;color:var(--muted)}
-  .stack{display:flex;flex-direction:column;gap:1.2cqh;flex:1;justify-content:center}
-  .layer{display:grid;grid-template-columns:5cqw 1fr auto;align-items:center;gap:3cqw;padding:2.4cqh 3.2cqw;border-radius:8px}
+  .stack{display:flex;flex-direction:column;gap:.8cqh;flex:1;justify-content:center}
+  .layer{display:grid;grid-template-columns:5cqw 1fr auto;align-items:center;gap:3cqw;padding:1.7cqh 3.2cqw;border-radius:8px}
   .layer .lnum{font-family:var(--serif);font-size:2cqw;opacity:.5}
-  .layer .lname{font-family:var(--serif);font-weight:500;font-size:3.2cqw;letter-spacing:-.01em}
-  .layer .ldesc{font-family:var(--sans);font-size:1.55cqw;opacity:.72;margin-top:.4cqh}
+  .layer .lname{font-family:var(--serif);font-weight:500;font-size:2.8cqw;letter-spacing:-.01em}
+  .layer .ldesc{font-family:var(--sans);font-size:1.4cqw;opacity:.72;margin-top:.35cqh}
   .layer .ltag{font-family:var(--sans);font-weight:500;font-size:1.2cqw;letter-spacing:.2em;text-transform:uppercase;justify-self:end}
-  .layer.l-int{background:transparent;border:1px solid var(--border);color:var(--ink)}
+  .layer.l-int{background:transparent;border:1px dashed var(--border);color:var(--ink)}
   .layer.l-int .ltag{color:var(--muted)}
-  .layer.l-ctx,.layer.l-data{background:var(--ink);color:var(--bone)}
-  .layer.l-ctx .ltag,.layer.l-data .ltag{color:var(--accent)}
-  .s-layers .foot{margin-top:3.4cqh;font-family:var(--serif);font-style:italic;font-size:2.4cqw}
+  .layer.l-int .ldesc{opacity:.6}
+  .layer.l-ctx,.layer.l-data,.layer.l-tool{background:var(--bone-2);color:var(--ink);border:1px solid var(--border)}
+  .layer.l-ctx .ltag,.layer.l-data .ltag,.layer.l-tool .ltag{color:var(--accent)}
+  .layer.l-ctx{border-left:4px solid var(--accent)}
+  .layer .moat{color:var(--accent);font-family:var(--sans);font-weight:600;font-size:1cqw;letter-spacing:.02em;margin-left:.5cqw}
+  .s-layers .foot{margin-top:1.8cqh;font-family:var(--serif);font-style:italic;font-size:1.95cqw}
   .s-layers .foot b{font-style:normal;font-weight:600;color:var(--accent)}
+
+  /* ---------- 6 · OUR STACK ---------- */
+  .s-stack .head{margin-bottom:2cqh}
+  .s-stack .eyebrow{color:var(--accent);margin-bottom:1.1cqh}
+  .s-stack h2{font-family:var(--serif);font-weight:500;font-size:4.2cqw;line-height:1.04;letter-spacing:-.02em;font-variation-settings:'opsz' 120}
+  .s-stack h2 em{font-style:italic;font-weight:400;color:var(--muted)}
+  .arch2{display:flex;flex-direction:column;gap:2.2cqh;flex:1;justify-content:center}
+  .orchbar{display:flex;align-items:center;gap:1cqw;background:rgba(217,119,87,.08);border:1.5px solid var(--accent);border-radius:10px;padding:1.3cqh 1.6cqw}
+  .orchbar img{height:1.7cqw;width:auto}
+  .orchbar .on{font-family:var(--serif);font-weight:600;font-size:1.9cqw;color:var(--ink)}
+  .orchbar .or{font-family:var(--sans);font-size:1.1cqw;color:var(--muted)}
+  .orchbar .od{margin-left:auto;font-family:var(--sans);font-weight:700;font-size:.95cqw;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+  .commodity{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2cqw}
+  .ccard{border:1px solid var(--border);border-radius:9px;padding:1.9cqh 1.3cqw;background:var(--bone-2);display:flex;flex-direction:column;gap:.7cqh}
+  .ccard .crole{font-family:var(--sans);font-weight:600;font-size:.88cqw;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .ccard .cmain{font-family:var(--serif);font-weight:600;font-size:1.55cqw;color:var(--ink);display:inline-flex;align-items:center;gap:.5cqw;letter-spacing:-.01em}
+  .ccard .cmain img{height:1.4cqw;width:auto}
+  .ccard .cmain img.wm{height:1.15cqw}
+  .ccard .clogos{display:flex;flex-wrap:wrap;align-items:center;gap:.7cqw}
+  .ccard .clogos img{height:1.5cqw;width:auto}
+  .ccard .clogos img.wm{height:1.15cqw}
+  .ccard .clogos .more{font-family:var(--sans);font-size:1cqw;color:var(--muted)}
+  .ccard .csub{font-family:var(--sans);font-size:1cqw;color:var(--muted);margin-top:auto}
+  .ccard .csub .lock{color:#0a7d4e;font-weight:600}
+  .ctxbox{border:2px solid var(--accent);border-radius:12px;background:rgba(217,119,87,.05);padding:2.2cqh 1.8cqw;display:flex;flex-direction:column}
+  .ctxbox .cxh{display:flex;align-items:baseline;gap:1cqw}
+  .ctxbox .cxt{font-family:var(--serif);font-weight:600;font-size:2.3cqw;color:var(--ink);letter-spacing:-.01em}
+  .ctxbox .cxm{font-family:var(--sans);font-weight:600;font-size:.95cqw;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+  .ctxbox .cxs{font-family:var(--sans);font-size:1.15cqw;color:var(--ink-soft);margin:.5cqh 0 1.2cqh}
+  .cxgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5cqh 1.4cqw}
+  .cxi{display:flex;align-items:center;gap:.6cqw;font-family:var(--serif);font-weight:600;font-size:1.55cqw;color:var(--ink);letter-spacing:-.01em}
+  .cxi::before{content:"";width:.5cqw;height:.5cqw;border-radius:50%;background:var(--accent);flex:none}
+  .s-stack .foot{margin-top:1.6cqh;font-family:var(--serif);font-style:italic;font-size:1.85cqw;color:var(--ink)}
+  .s-stack .foot b{font-style:normal;font-weight:600;color:var(--accent)}
 
   /* ---------- 6 · A WEEK / DEMO ---------- */
   .s-week{flex-direction:row;gap:4.5cqw;align-items:center}
@@ -256,33 +299,65 @@
   .brow .bv{font-family:var(--serif);font-weight:600;font-size:1.2cqw;color:var(--ink)}
   .dash .note{font-family:var(--sans);font-size:.95cqw;color:var(--muted);margin-top:1.8cqh;font-style:italic}
 
+  /* ---------- 7 · DEMO ---------- */
+  .s-demo{justify-content:center;align-items:center;text-align:center}
+  .s-demo .eyebrow{color:var(--accent);margin-bottom:1.4cqh;display:inline-flex;align-items:center;gap:.7cqw}
+  .s-demo .livebadge{background:var(--accent);color:#fff;font-weight:700;font-size:.85em;padding:.3cqh .8cqw;border-radius:5px;letter-spacing:.1em}
+  .s-demo h2{font-family:var(--serif);font-weight:500;font-size:3.3cqw;line-height:1.05;letter-spacing:-.02em;font-variation-settings:'opsz' 120}
+  .s-demo h2 em{font-style:italic;color:var(--accent)}
+  .term{width:84%;margin:2.2cqh auto 0;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:#fff;box-shadow:0 24px 60px -28px rgba(20,20,19,.45);text-align:left}
+  .term .tbar{background:var(--bone-2);padding:1.1cqh 1.4cqw;display:flex;align-items:center;gap:.6cqw;border-bottom:1px solid var(--border)}
+  .term .tbar i{width:.9cqw;height:.9cqw;border-radius:50%;background:var(--border)}
+  .term .tbar .tt{margin-left:1cqw;font-family:ui-monospace,Menlo,monospace;font-size:1.05cqw;color:var(--muted)}
+  .term .tbody{padding:2cqh 2cqw;font-family:ui-monospace,Menlo,monospace;font-size:1.12cqw;line-height:1.5}
+  .term .tcmd{color:var(--muted)}
+  .term .twelcome{color:var(--accent);margin:.4cqh 0 1.2cqh}
+  .term .tq{color:var(--ink);font-weight:700;margin-top:1.3cqh;display:flex;gap:.6cqw}
+  .term .tq .c{color:var(--accent)}
+  .term .ta{color:var(--ink-soft);margin-top:.7cqh;padding-left:1.5cqw}
+  .term .tcamp{color:var(--ink);padding-left:1.5cqw;margin-top:.35cqh;display:flex;align-items:baseline;gap:.6cqw}
+  .term .tcamp .dot{color:var(--accent)}
+  .term .tcamp b{color:var(--accent);font-weight:700}
+  .term .tdone{color:#0a7d4e;padding-left:1.5cqw;margin-top:.7cqh;font-weight:700}
+  .term .tcur{display:inline-block;width:1.05ch;height:1em;background:var(--ink);margin-left:.15cqw;vertical-align:text-bottom;animation:blink 1.1s step-end infinite}
+  .s-demo .dcap{font-family:var(--serif);font-style:italic;font-size:1.6cqw;color:var(--ink);margin-top:2cqh;max-width:74%}
+
   /* ---------- 7 · THE PATH ---------- */
-  .s-path .eyebrow{color:var(--accent);margin-bottom:1.1cqh}
-  .s-path .ah{font-family:var(--serif);font-weight:500;font-size:2.8cqw;letter-spacing:-.01em;margin-bottom:3.4cqh}
-  .s-path .ah em{font-style:italic;color:var(--accent)}
-  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1.8cqw;flex:1}
-  .step{display:flex;flex-direction:column;border-top:2px solid var(--border);padding-top:1.8cqh}
-  .step.last{border-top-color:var(--accent)}
-  .step .sn{font-family:var(--serif);font-weight:600;font-size:1.5cqw;color:var(--accent);margin-bottom:1cqh}
-  .step .st{font-family:var(--serif);font-weight:600;font-size:2cqw;letter-spacing:-.01em;line-height:1.08;color:var(--ink)}
-  .step.last .st{color:var(--accent)}
-  .step .sd{font-family:var(--sans);font-size:1.2cqw;color:var(--muted);margin-top:1.1cqh;line-height:1.42}
+  .s-path{justify-content:center}
+  .s-path .eyebrow{color:var(--accent);margin-bottom:1.4cqh}
+  .s-path .hero{font-family:var(--serif);font-weight:600;font-size:7cqw;line-height:1;letter-spacing:-.03em;color:var(--ink);font-variation-settings:'opsz' 144}
+  .s-path .hero b{color:var(--accent)}
+  .s-path .pers{font-family:var(--serif);font-style:italic;font-weight:400;font-size:2.1cqw;color:var(--ink-soft);margin-top:1.6cqh;max-width:46ch;line-height:1.3}
+  .s-path .pers b{font-style:normal;font-weight:600;color:var(--accent)}
+  .traits{display:grid;grid-template-columns:1fr 1fr;gap:3cqh 3cqw;margin-top:3.6cqh;max-width:90%}
+  .trait{border-left:3px solid var(--accent);padding-left:1.4cqw}
+  .trait .tl{font-family:var(--serif);font-weight:600;font-size:1.85cqw;color:var(--ink);letter-spacing:-.01em;line-height:1.1}
+  .trait .td{font-family:var(--sans);font-size:1.22cqw;color:var(--muted);margin-top:.45cqh;line-height:1.4}
+  .trait .td b{color:var(--accent);font-weight:600}
+  .trait.key{background:rgba(217,119,87,.08);border-radius:0 8px 8px 0;padding:1cqh 1.2cqw 1cqh 1.4cqw}
+  .trait.key .td{color:var(--ink-soft)}
+  .trait .kbadge{font-family:var(--sans);font-weight:700;font-size:.52em;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--accent);padding:.25cqh .6cqw;border-radius:4px;vertical-align:middle;margin-left:.6cqw}
+  .s-path .pthen{font-family:var(--serif);font-style:italic;font-size:2cqw;color:var(--ink);margin-top:3.8cqh;line-height:1.25}
+  .s-path .pthen b{font-style:normal;font-weight:600;color:var(--accent)}
+  .s-path .more{font-family:var(--sans);font-size:1.28cqw;color:var(--muted);margin-top:1.8cqh;max-width:86%;line-height:1.55}
+  .s-path .more b{color:var(--ink);font-weight:600}
 
   /* ---------- 8 · THE LOOP (circular) ---------- */
-  .s-loop{justify-content:flex-start;align-items:center;text-align:center}
+  .s-loop{justify-content:center;align-items:center;text-align:center}
   .s-loop .eyebrow{color:var(--accent);margin-bottom:1cqh}
   .s-loop .ah{font-family:var(--serif);font-weight:500;font-size:2.7cqw;letter-spacing:-.01em}
   .s-loop .ah em{font-style:italic;color:var(--accent)}
   .s-loop .ex{font-family:var(--sans);font-size:1.2cqw;color:var(--muted);margin-top:.8cqh;letter-spacing:.02em}
-  .loopwrap{position:relative;height:52cqh;aspect-ratio:1;margin:1.6cqh auto 0}
+  .loopwrap{position:relative;height:63cqh;aspect-ratio:1;margin:1.8cqh auto .4cqh}
   .loopwrap svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
-  .lnode{position:absolute;transform:translate(-50%,-50%);background:var(--bone);border:1px solid var(--border);border-radius:8px;padding:1cqh 1.1cqw;font-family:var(--sans);font-weight:600;font-size:1.2cqw;color:var(--ink);white-space:nowrap;box-shadow:0 3px 10px -5px rgba(20,20,19,.3)}
+  .lnode{position:absolute;transform:translate(-50%,-50%);background:var(--bone);border:1px solid var(--border);border-radius:9px;padding:1.2cqh 1.4cqw;font-family:var(--sans);font-weight:600;font-size:1.45cqw;color:var(--ink);white-space:nowrap;box-shadow:0 3px 10px -5px rgba(20,20,19,.3)}
   .lnode.k{background:var(--ink);color:var(--bone);border-color:var(--ink)}
-  .lar{position:absolute;width:0;height:0;border-top:.7cqh solid transparent;border-bottom:.7cqh solid transparent;border-left:1.1cqh solid var(--accent)}
+  .lar{position:absolute;width:0;height:0;border-top:.85cqh solid transparent;border-bottom:.85cqh solid transparent;border-left:1.3cqh solid var(--accent)}
   .lcenter{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);max-width:14cqw}
-  .lcenter .lc1{font-family:var(--serif);font-style:italic;font-weight:500;font-size:1.7cqw;color:var(--ink);line-height:1.15}
-  .lcenter .lc2{font-family:var(--sans);font-size:1.05cqw;color:var(--muted);margin-top:.5cqh}
-  .s-loop .cap{font-family:var(--serif);font-style:italic;font-size:1.8cqw;color:var(--ink);margin-top:2cqh}
+  .lcenter{max-width:17cqw}
+  .lcenter .lc1{font-family:var(--serif);font-style:italic;font-weight:500;font-size:2cqw;color:var(--ink);line-height:1.15}
+  .lcenter .lc2{font-family:var(--sans);font-size:1.2cqw;color:var(--muted);margin-top:.5cqh}
+  .s-loop .cap{font-family:var(--serif);font-style:italic;font-size:1.6cqw;color:var(--ink);margin-top:1.2cqh}
   .s-loop .cap b{font-style:normal;font-weight:600;color:var(--accent)}
 
   /* ---------- 8 · THE ASK ---------- */
@@ -293,6 +368,15 @@
   .s-ask .sub{font-family:var(--sans);font-size:2.2cqw;color:var(--muted);margin-top:2.4cqh;max-width:62%}
   .s-ask .punch{font-family:var(--serif);font-weight:600;font-size:12.5cqw;line-height:.9;letter-spacing:-.03em;margin-top:4.6cqh;
     color:var(--accent);font-variation-settings:'opsz' 144}
+
+  /* ---------- 11 · THANK YOU ---------- */
+  .s-thanks{justify-content:center}
+  .s-thanks .big{font-family:var(--serif);font-weight:600;font-size:11cqw;line-height:.95;letter-spacing:-.03em;color:var(--ink);font-variation-settings:'opsz' 144}
+  .s-thanks .q{font-family:var(--serif);font-style:italic;font-weight:400;font-size:3.2cqw;color:var(--accent);margin-top:1cqh}
+  .s-thanks .sig{display:flex;align-items:center;gap:1.1cqw;margin-top:5cqh;border-top:1px solid var(--border);padding-top:2.4cqh}
+  .s-thanks .sig .nm{font-family:var(--serif);font-weight:600;font-size:2.2cqw;color:var(--ink)}
+  .s-thanks .sig .sep{color:var(--border);font-size:2cqw}
+  .s-thanks .sig .em{font-family:ui-monospace,Menlo,monospace;font-size:1.45cqw;color:var(--accent)}
 
   /* ---------- chrome + presenter notes ---------- */
   .ui{position:fixed;z-index:10;font-family:var(--sans);letter-spacing:.04em}
@@ -328,7 +412,7 @@
         <div class="subtitle reveal" style="--d:.46s">What the potential really looks like, the high-level path to get there, and the first step you can take.</div>
       </div>
       <div class="foot reveal" style="--d:.62s">
-        <div class="spk">Gaurav Gupta<small>CTO &amp; CMO · Allo Health</small></div>
+        <div class="spk">Gaurav Gupta <span class="aka">aka GG</span><small>CTO &amp; CMO · Allo Health</small></div>
         <div class="ctx">[ host · date ]</div>
       </div>
     </section>
@@ -338,7 +422,7 @@
       <div class="intro">
         <div class="portrait reveal" style="--d:.05s"><img src="assets/gg.jpg" alt="Gaurav Gupta"></div>
         <div class="eyebrow reveal" style="--d:.12s">Speaker</div>
-        <div class="nm reveal" style="--d:.18s">Gaurav Gupta</div>
+        <div class="nm reveal" style="--d:.18s">Gaurav Gupta <span class="aka">aka GG</span></div>
         <div class="rl reveal" style="--d:.26s">CTO &amp; CMO · Allo Health</div>
         <div class="bio reveal" style="--d:.36s">Fifteen years a builder: engineer, founder, operator.</div>
         <ul class="hl">
@@ -396,7 +480,7 @@
     </section>
 
     <!-- 3 · CHAT vs INTEGRATED -->
-    <section class="slide bone s-reframe" data-slide>
+    <section class="slide bone s-reframe frags" data-slide>
       <div class="eyebrow reveal" style="--d:.05s">The reframe</div>
       <h2 class="reveal" style="--d:.14s">Stop visiting AI. Embed it.</h2>
       <div class="sub reveal" style="--d:.24s">Same model. The only difference is whether it can <b>see your business.</b></div>
@@ -410,7 +494,7 @@
           <div class="bub file reveal" style="--d:5.5s"><span class="clip">📎</span> consultations_april.csv</div>
           <div class="typing" style="--d:5.9s;--td:.85s"><i></i><i></i><i></i></div>
           <div class="bub a reveal" style="--d:6.7s">Thanks. I'll also need clinic schedules and anything on regional disruptions.</div>
-          <div class="bub u reveal" style="--d:7.2s">Ugh… let me go pull all that together.</div>
+          <div class="bub u reveal" style="--d:7.2s">I don't have that handy… let me see who can provide the data.</div>
           <div class="note reveal" style="--d:7.5s">Nothing wrong with it. But it's blind to your business: no data, no context, endless back-and-forth.</div>
           <div class="composer reveal" style="--d:7.7s"><span class="ci"><span class="cur"></span>Ask a follow-up…</span><span class="send">↑</span></div>
         </div>
@@ -451,25 +535,21 @@
           <div><div class="fn">Engineering</div><ul class="blist"><li>No code written by hand in 2 months</li><li>Autonomous workflows run the build</li></ul></div>
           <div class="m"><div class="mv">3×</div><div class="ml">feature velocity</div></div>
         </div>
-        <div class="lrow reveal" style="--d:.48s">
+        <div class="lrow reveal" style="--d:1.2s">
           <div><div class="fn">Product</div><ul class="blist"><li>Every stakeholder prototypes with AI</li><li>Design fine-tunes only when needed</li></ul></div>
           <div class="m"><div class="mv">1</div><div class="ml">designer for the whole org</div></div>
         </div>
-        <div class="lrow reveal" style="--d:.66s">
+        <div class="lrow reveal" style="--d:2.1s">
           <div><div class="fn">Marketing</div><ul class="blist"><li>Company-wide Google Ads, run by one person who'd never done ads</li><li>Review &amp; competitor analysis</li><li>Expanding to Meta, SEO &amp; GEO</li></ul></div>
-          <div class="m"><div class="mv">9.5%<span class="ar">→</span>8.5%</div><div class="ml">marketing spend, % of revenue</div></div>
+          <div class="m"><div class="mv">11%</div><div class="ml">lower marketing cost</div></div>
         </div>
-        <div class="lrow reveal" style="--d:.84s">
+        <div class="lrow reveal" style="--d:3s">
           <div><div class="fn">Support</div><ul class="blist"><li>Inbound call audits</li><li>WhatsApp chatbot, continuously audited for gaps</li></ul></div>
           <div class="m"><div class="mv">+7%</div><div class="ml">inbound conversion · expert-level chatbot</div></div>
         </div>
-        <div class="lrow reveal" style="--d:1.02s">
+        <div class="lrow reveal" style="--d:3.9s">
           <div><div class="fn">Clinical efficiency</div><ul class="blist"><li>Decision support with explainability</li><li>Auto e-scribe notes for every consultation, no recordings</li><li>Drug-interaction checks</li></ul></div>
           <div class="m"><div class="mv">90%+</div><div class="ml">improvement rates, every doctor</div></div>
-        </div>
-        <div class="lrow reveal" style="--d:1.2s">
-          <div><div class="fn">Data &amp; analytics</div><ul class="blist"><li>Self-serve insight across the company</li><li>Channel to city to category drill-down</li></ul></div>
-          <div class="m"><div class="mv">Self-serve</div><div class="ml">no analyst queue</div></div>
         </div>
       </div>
     </section>
@@ -477,68 +557,121 @@
     <!-- 5 · THREE LAYERS -->
     <section class="slide bone s-layers" data-slide>
       <div class="head">
-        <div class="eyebrow reveal" style="--d:.05s">The model</div>
-        <h2 class="reveal" style="--d:.14s">Three simple things,<br><em>and the AI is the easy part.</em></h2>
+        <div class="eyebrow reveal" style="--d:.05s">How to embed it</div>
+        <h2 class="reveal" style="--d:.14s">Four simple things,<br><em>and the AI is the easy part.</em></h2>
       </div>
       <div class="stack">
-        <div class="layer l-int reveal" style="--d:.6s">
+        <div class="layer l-int reveal" style="--d:.76s">
+          <span class="lnum">04</span>
+          <span><span class="lname">Intelligence</span><div class="ldesc">the brain: rent it, stay swappable</div></span>
+          <span class="ltag">rent</span>
+        </div>
+        <div class="layer l-tool reveal" style="--d:.6s">
           <span class="lnum">03</span>
-          <span><span class="lname">Intelligence</span><div class="ldesc">the brain: reasons over everything, and acts</div></span>
-          <span class="ltag">rent it</span>
+          <span><span class="lname">Tools</span><div class="ldesc">the hands: adopt standard ones, build only what's yours</div></span>
+          <span class="ltag">adopt</span>
         </div>
         <div class="layer l-ctx reveal" style="--d:.44s">
           <span class="lnum">02</span>
-          <span><span class="lname">Context</span><div class="ldesc">the memory: your playbooks, how you decide</div></span>
-          <span class="ltag">build · own</span>
+          <span><span class="lname">Context</span><span class="moat">· most important</span><div class="ldesc">the memory: your playbooks, standards and evals</div></span>
+          <span class="ltag">build</span>
         </div>
         <div class="layer l-data reveal" style="--d:.28s">
           <span class="lnum">01</span>
-          <span><span class="lname">Data</span><div class="ldesc">the eyes: every system, connected</div></span>
-          <span class="ltag">build · own</span>
+          <span><span class="lname">Data</span><div class="ldesc">the eyes: you own it, connect it through tools, governed</div></span>
+          <span class="ltag">own</span>
         </div>
       </div>
-      <div class="foot reveal" style="--d:.78s">You rent the top. You <b>build and own</b> the bottom two.</div>
+      <div class="foot reveal" style="--d:.94s"><b>Rent</b> the brain. <b>Adopt</b> the hands. <b>Build</b> the memory. <b>Own and open up</b> the data.</div>
     </section>
 
-    <!-- 6 · A WEEK / DEMO -->
-    <section class="slide bone s-week" data-slide>
-      <div class="left">
-        <div class="eyebrow reveal" style="--d:.05s">Velocity</div>
-        <div class="big reveal" style="--d:.16s">7 days</div>
-        <h2 class="reveal" style="--d:.34s">This didn't exist<br>last week.</h2>
-        <div class="demo reveal" style="--d:.55s"><span class="live">Live</span> let me show you →</div>
+    <!-- 6 · OUR STACK -->
+    <section class="slide bone s-stack" data-slide>
+      <div class="head">
+        <div class="eyebrow reveal" style="--d:.05s">How we leverage AI, today</div>
+        <h2 class="reveal" style="--d:.14s">Claude Code runs it. <em>The moat is the context.</em></h2>
       </div>
-      <div class="browser reveal" style="--d:.4s">
-        <div class="bar"><i></i><i></i><i></i><span class="u">demand-dashboard · channel ▸ city ▸ category</span></div>
-        <div class="dash">
-          <div class="drow">Channel <b>›</b> City <b>›</b> Category · drill any cut</div>
-          <div class="bars">
-            <div class="brow"><span class="bl">Google</span><span class="bt a" style="width:88%"></span><span class="bv">1,240</span></div>
-            <div class="brow"><span class="bl">GMB</span><span class="bt" style="width:64%"></span><span class="bv">910</span></div>
-            <div class="brow"><span class="bl">Meta</span><span class="bt" style="width:41%"></span><span class="bv">580</span></div>
-            <div class="brow"><span class="bl">Organic</span><span class="bt" style="width:27%"></span><span class="bv">390</span></div>
+      <div class="arch2">
+        <div class="orchbar reveal" style="--d:.3s">
+          <img class="wm" src="assets/logos/claude.svg" alt="Claude">
+          <span class="on">Claude Code</span><span class="or">· the orchestrator</span>
+          <span class="od">drives it all ↓</span>
+        </div>
+        <div class="commodity">
+          <div class="ccard reveal" style="--d:.44s">
+            <div class="crole">Intelligence · rent</div>
+            <div class="cmain"><img class="wm" src="assets/logos/claude.svg" alt="Claude"> (Opus &amp; Sonnet)</div>
+            <div class="csub">reasons &amp; decides</div>
           </div>
-          <div class="note">representative · real dashboard frame swapped in for the live demo</div>
+          <div class="ccard reveal" style="--d:.54s">
+            <div class="crole">Tools · MCP · adopt</div>
+            <div class="clogos"><img src="assets/logos/googleads.svg" alt="Google Ads"><img class="wm" src="assets/logos/meta.svg" alt="Meta"><img src="assets/logos/gmb.svg" alt="GMB"><img src="assets/logos/slack.svg" alt="Slack"><span class="more">Ahrefs · &amp; more</span></div>
+            <div class="csub">act in any system</div>
+          </div>
+          <div class="ccard reveal" style="--d:.64s">
+            <div class="crole">Data · own</div>
+            <div class="cmain"><img src="assets/logos/redshift.svg" alt="Redshift"> Redshift</div>
+            <div class="csub">data warehouse · <span class="lock">🔒 access control</span></div>
+          </div>
+        </div>
+        <div class="ctxbox reveal" style="--d:.8s">
+          <div class="cxh"><span class="cxt">Context · Skills</span><span class="cxm">build &amp; own · the moat</span></div>
+          <div class="cxs">Your know-how, encoded. The one thing only you can build, and it compounds.</div>
+          <div class="cxgrid">
+            <div class="cxi">objectives</div>
+            <div class="cxi">decision frameworks</div>
+            <div class="cxi">strategies</div>
+            <div class="cxi">playbooks</div>
+            <div class="cxi">the harness</div>
+            <div class="cxi">evals</div>
+            <div class="cxi">data schemas</div>
+            <div class="cxi">guardrails</div>
+          </div>
         </div>
       </div>
+      <div class="foot reveal" style="--d:1s">The top three you plug in. <b>The context you build is the moat.</b> Compliant from day one, and we're still iterating fast.</div>
     </section>
 
-    <!-- 7 · THE PATH -->
-    <section class="slide bone s-path" data-slide>
-      <div class="eyebrow reveal" style="--d:.05s">The path</div>
-      <div class="ah reveal" style="--d:.12s">Start small. <em>Then it compounds.</em></div>
-      <div class="steps">
-        <div class="step reveal" style="--d:.3s"><div class="sn">01</div><div class="st">Assign a champion</div><div class="sd">One person who owns it. Not a vendor, not a committee.</div></div>
-        <div class="step reveal" style="--d:.42s"><div class="sn">02</div><div class="st">Ship 1–2 use cases</div><div class="sd">Even at lower accuracy, on your data and context layer. Just get a feel for it.</div></div>
-        <div class="step reveal" style="--d:.54s"><div class="sn">03</div><div class="st">Reach real value</div><div class="sd">Prove it, then onboard more people as it earns trust.</div></div>
-        <div class="step last reveal" style="--d:.66s"><div class="sn">04</div><div class="st">Steady state</div><div class="sd">Every workflow becomes a self-improving feedback loop.</div></div>
+    <!-- 7 · DEMO -->
+    <section class="slide bone s-demo" data-slide>
+      <div class="eyebrow reveal" style="--d:.05s"><span class="livebadge">● LIVE</span> Demo</div>
+      <h2 class="reveal" style="--d:.16s">A fresh Claude Code. <em>One real question.</em></h2>
+      <div class="term reveal" style="--d:.34s">
+        <div class="tbar"><i></i><i></i><i></i><span class="tt">claude code · new session</span></div>
+        <div class="tbody">
+          <div class="tcmd">$ claude</div>
+          <div class="twelcome">✻ Welcome to Claude Code</div>
+          <div class="tq"><span class="c">&gt;</span><span>Please analyze campaign funnels and suggest what all STD campaigns we can scale, and by how much?</span></div>
+          <div class="ta">Two campaigns have clear headroom to scale:</div>
+          <div class="tcamp"><span class="dot">●</span><span>Campaign A &nbsp; <b>scale +40%</b></span></div>
+          <div class="tcamp"><span class="dot">●</span><span>Campaign B &nbsp; <b>scale +25%</b></span></div>
+          <div class="tq"><span class="c">&gt;</span><span>go ahead and make the change</span></div>
+          <div class="tdone">✓ Done. Budgets updated and live.</div>
+          <div class="tq"><span class="c">&gt;</span><span>For the query above, what did you use for intelligence, tools, data and context?<span class="tcur"></span></span></div>
+        </div>
       </div>
+      <div class="dcap reveal" style="--d:.6s">Exactly what a Google performance-marketing manager asks. Watch it answer with our data and context, live.</div>
+    </section>
+
+    <!-- 8 · THE PATH -->
+    <section class="slide bone s-path" data-slide>
+      <div class="eyebrow reveal" style="--d:.05s">Where I'd recommend to start</div>
+      <div class="hero reveal" style="--d:.16s">Assign a <b>champion.</b></div>
+      <div class="pers reveal" style="--d:.34s">I championed it at Allo. Now the team ships things that <b>surprise me.</b></div>
+      <div class="traits">
+        <div class="trait key reveal" style="--d:.55s"><div class="tl">Deep domain expertise <span class="kbadge">most important</span></div><div class="td">once you start, the critical skill is <b>judgement and taste</b>, and that comes only from deep domain understanding. Impact from day one.</div></div>
+        <div class="trait reveal" style="--d:.66s"><div class="tl">First-principles thinking</div><div class="td">cuts through the jargon to the signal, and the AI world is full of noise</div></div>
+        <div class="trait reveal" style="--d:.77s"><div class="tl">An open mind</div><div class="td">unfazed by the hype, willing to rethink how the work gets done</div></div>
+        <div class="trait reveal" style="--d:.88s"><div class="tl">Technical?</div><div class="td">a plus, but not required</div></div>
+      </div>
+      <div class="pthen reveal" style="--d:.96s">And once that champion is on the hunt, <b>the "HOW" is the easy part.</b></div>
+      <div class="more reveal" style="--d:1.1s">Then the rest follows: <b>ship 1–2 use cases</b> (lower accuracy is fine) <b>→ real value, onboard more → steady state,</b> a self-improving loop.</div>
     </section>
 
     <!-- 8 · THE LOOP -->
     <section class="slide bone s-loop" data-slide>
       <div class="eyebrow reveal" style="--d:.05s">Steady state</div>
-      <div class="ah reveal" style="--d:.12s">Then it <em>runs itself.</em></div>
+      <div class="ah reveal" style="--d:.12s">A <em>self-learning feedback loop.</em></div>
       <div class="ex reveal" style="--d:.22s">Example: one Google marketing campaign</div>
       <div class="loopwrap reveal" style="--d:.36s">
         <svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="38" fill="none" stroke="#C2C0B6" stroke-width="0.5" stroke-dasharray="1.6 2.4"/></svg>
@@ -561,10 +694,21 @@
 
     <!-- 9 · THE ASK -->
     <section class="slide bone s-ask" data-slide>
-      <div class="eyebrow reveal" style="--d:.05s">The ask</div>
+      <div class="eyebrow reveal" style="--d:.05s">One advice</div>
       <div class="line reveal" style="--d:.2s">Assign your champion.</div>
       <div class="sub reveal" style="--d:.46s">The one person who owns it, and keeps asking "what else could it do?"</div>
       <div class="punch reveal" style="--d:.7s">This month.</div>
+    </section>
+
+    <!-- 11 · THANK YOU -->
+    <section class="slide bone s-thanks" data-slide>
+      <div class="big reveal" style="--d:.1s">Thank you.</div>
+      <div class="q reveal" style="--d:.32s">Questions?</div>
+      <div class="sig reveal" style="--d:.52s">
+        <span class="nm">Gaurav Gupta</span>
+        <span class="sep">·</span>
+        <span class="em">gg@allohealth.care</span>
+      </div>
     </section>
 
     <div class="brandmark hidden">
@@ -578,40 +722,61 @@
   <div class="nav-zone next" onclick="go(1)"></div>
   <div class="ui ui--note">Direction build · brand-studio system · Recoleta via Fraunces · numbers placeholder · press N for notes</div>
   <div class="ui ui--hint">← → MOVE · N NOTES</div>
-  <div class="ui ui--count"><span id="cur">1</span> / 10</div>
+  <div class="ui ui--count"><span id="cur">1</span> / 12</div>
   <div class="dots" id="dots"></div>
   <div id="notes"><div class="nh">Speaker note · slide <span id="ns">1</span></div><div class="nb" id="nb"></div></div>
 
 <script>
   const slides=[...document.querySelectorAll('[data-slide]')];
   const notes=[
-    "<b>Title card.</b> Set the frame in one breath: \"This isn't about chatbots. It's about AI as leverage. This is a 101: I'll show you what the potential looks like, the high-level path, and the first step. Not a deep technical how.\" Then move. (~15s)",
-    "<b>Open with the line:</b> \"I'm not a consultant telling you what's possible. I'm a builder, this is just what we've shipped.\" Let the timeline speak; don't narrate every job. Trace the arc: engineer at IBM &amp; Amazon, founder/CTO through YC, then operator. Land on the last node: today both CTO <i>and</i> CMO at Allo, and that dual seat is why AI sticks across the company. (~45s)",
+    "<b>Frame it:</b> I'll cover how to build AI as leverage, rather than using it as a chatbot. I'm not here to convince anyone to use AI or not. I'll show how we use AI at Allo Health, what it looks like in steady state, and one piece of advice to get started. This is a 101, so I won't go too deep, but I'll cover the important parts of the how. (~20s)",
+    "<b>Position yourself:</b> a builder who's been building for 16 years, at companies of every shape and size. A builder, not an AI consultant, here to share opinions and a journey, not a sales pitch. Let the timeline carry it; don't narrate every job. Land on the last node: today both CTO <i>and</i> CMO at Allo, and that dual seat is why AI sticks across the company. (~45s)",
     "<b>Introduce Allo.</b> Don't soften the category: quality care for the conditions people are ashamed to talk about, sexual and mental health in India, the most compliance-restricted category there is to market. Then the scale in one breath: 60+ clinics, 20+ cities, 400k+ patients, 5–7 new clinics a month. (~40s)",
     "<b>The reframe: what doesn't work, then what does.</b> Left, watch a normal chatbot session: you ask, it gives generic gyan, asks for data, you upload, it asks for more. Smart, but blind to your business. Right, embedded: same question, it runs the diagnostic like a growth analyst, pulls the funnel (traffic and leads up, consults flat), names the root cause (Mumbai clinics closed through the rains), and dispatches the actions, supply team on the closures, lead-to-book on the lost bookings. Same model. The difference is data and context. (~2.5m)",
-    "<b>From there: we leverage AI in pretty much everything.</b> Read it like an org scorecard, every function, every metric a CXO cares about. Engineering 3× faster with zero hand-written code. Product on a single designer. Marketing: company-wide Google Ads by one person who'd never done ads, spend fell 9.5% to 8.5%. Support lifted inbound conversion 7% with an expert-level chatbot. Clinical decision support holds 90%+ across every doctor, moving from sexual health into mental health. And we've barely scratched the surface. (~2.5m)",
-    "<b>It's just three simple things.</b> Data: the eyes, every system connected. Context: the memory, your playbooks. Intelligence: the brain that reasons and acts. <b>Punchline:</b> the intelligence is a commodity, everyone rents the same one. The two layers you build and own, data &amp; context, that's the moat. (~1.5m)",
-    "<b>Once the layers exist, the next thing is cheap.</b> This dashboard didn't exist last week: one person, one week. Now anyone goes channel → city → category and sees where demand moves and why. <b>\"Let me actually show you.\"</b> → switch to the live dashboard. (~2m + demo)",
-    "<b>The path, the one thing to do.</b> Assign a champion. Ship one or two use cases, even at lower accuracy, on your data and context. Get to real value, then onboard more people as it proves out. Then steady state: it becomes a self-improving loop. Starting small is the point; this is not a moonshot. (~1.5m)",
+    "<b>From there: we leverage AI in pretty much everything.</b> Read it like an org scorecard, every function, every metric a CXO cares about. Engineering 3× faster with zero hand-written code. Product on a single designer. Marketing: company-wide Google Ads by one person who'd never done ads, 11% more cost-efficient (spend 9.5% to 8.5% of revenue). Support lifted inbound conversion 7% with an expert-level chatbot. Clinical decision support holds 90%+ across every doctor, moving from sexual health into mental health. And we've barely scratched the surface. (~2.5m)",
+    "<b>Four layers. What to rent vs build, and why:</b><br><br><b>Intelligence (rent).</b> Frontier models are commoditized and improve monthly. Use them via API, stay model-swappable, never train your own. Zero moat here.<br><br><b>Tools (adopt).</b> Mostly rent: standard connectors and MCP servers for common systems. Build custom tools only for your proprietary actions. Low differentiation, don't over-invest.<br><br><b>Context (build, the #1 moat).</b> Your playbooks, standards, and your evals / feedback loop. It compounds, and only you can create it. Invest the most here.<br><br><b>Data (own).</b> You already own it. The job is access plus governance: expose it through tools (don't copy it into the AI), with a clean queryable layer and strict permissions / PII safety, critical in healthcare. Your proprietary data is a second moat.<br><br><b>Say:</b> rent the brain, adopt the hands, build the memory, own and open up the data. (~1.5m)",
+    "<b>How we built it, in plain terms.</b> Claude Code is the orchestrator, the thing that runs the show. It calls Claude for the thinking. It has MCP tools to act in Google Ads, Meta, GMB. It stores all our know-how as Skills, and that's the moat: objectives, decision frameworks, strategies, playbooks, the harness, evals, data schemas. And it talks to our Redshift data with access control, so it's compliant by design. The point: a compliant setup that delivers value from day one. (~1m)",
+    "<b>Live demo, the proof.</b> Open a brand-new Claude Code session, nothing up my sleeve. Type: 'Please analyze campaign funnels and suggest what all STD campaigns we can scale, and by how much?' When it comes back with campaigns A and B, reply 'go ahead and scale.' After it applies the change, ask it: 'for the query above, what all did you use for intelligence, tools, data and context?' so the room sees, live, exactly what's running behind the scenes. (the demo)",
+    "<b>The one thing: assign a champion.</b> This is the whole talk in one step. I championed it at Allo, and now the team does things that surprise me. The right person: first-principles thinking (the AI world is full of jargon, they distill the signal from the noise), deep expertise in your domain so they create impact from day one, an open mind, and technical is a plus but not required. Everything else, ship a use case at lower accuracy, reach value, onboard more, follows once the champion is in place. (~2m)",
     "<b>Steady state: it runs itself.</b> Example, a Google campaign: campaign, then data, improvement opportunities, actionables, change, live, and around again. Thousands of experiments at a scale and discipline a human can't match. AI runs it religiously. The loop is the moat. (~1m)",
-    "<b>The ask.</b> One thing: assign a champion. Not a vendor, not a committee, one person who owns it and keeps asking 'what else could it do?' <b>This month.</b> (~1m)"
+    "<b>One advice: assign a champion.</b> Not a vendor, not a committee, one person who owns it and keeps asking 'what else could it do?' Do it this month. (~1m)",
+    "<b>Thank you, over to questions.</b> Email is gg@allohealth.care. Then into Q&A and the live demo. (Q&A)"
   ];
-  let i=0;
+  let i=0, frag=0;
   const dots=document.getElementById('dots');
   const bm=document.querySelector('.brandmark');
   slides.forEach((_,n)=>{const d=document.createElement('div');d.className='dot'+(n===0?' on':'');d.onclick=()=>set(n);dots.appendChild(d)});
+
+  // tag fragment slides: chat-vs-integrated (left=1, right=2), how-we-use-AI (rows 1..N)
+  const rf=document.querySelector('.s-reframe');
+  if(rf){
+    rf.querySelectorAll('.col.visit .reveal,.col.visit .typing').forEach(e=>e.dataset.f='1');
+    rf.querySelectorAll('.col.embed .reveal,.col.embed .typing').forEach(e=>e.dataset.f='2');
+    rf.querySelectorAll('[data-f="1"],[data-f="2"]').forEach(e=>{const d=parseFloat(getComputedStyle(e).getPropertyValue('--d'))||0;e.style.setProperty('--d',Math.max(0,d-3)+'s');});
+  }
+  const au=document.querySelector('.s-aiuse');
+  if(au){[...au.querySelectorAll('.lrow')].forEach((r,k)=>{r.dataset.f=String(k+1);r.style.setProperty('--d','0s');});}
+
+  function fragMax(s){let m=0;s.querySelectorAll('.reveal,.typing').forEach(e=>{m=Math.max(m,+e.dataset.f||0)});return m;}
+  function applyFrags(s,u){s.querySelectorAll('.reveal,.typing').forEach(e=>e.classList.toggle('show',(+e.dataset.f||0)<=u));}
+  function startTrace(s){const tr=s.querySelector('.trace');if(!tr)return;tr.scrollTop=0;let k=0;const iv=setInterval(()=>{if(!s.classList.contains('is-active')||k++>62){clearInterval(iv);return;}tr.scrollTop=tr.scrollHeight;},160);}
+
   function set(n){
-    i=(n+slides.length)%slides.length;
+    i=(n+slides.length)%slides.length;frag=0;
     slides.forEach((s,k)=>s.classList.toggle('is-active',k===i));
     [...dots.children].forEach((d,k)=>d.classList.toggle('on',k===i));
     document.getElementById('cur').textContent=i+1;
     document.getElementById('ns').textContent=i+1;
     document.getElementById('nb').innerHTML=notes[i];
     bm.classList.toggle('hidden', i===0);
-    const tr=slides[i].querySelector('.trace');
-    if(tr){tr.scrollTop=0;let k=0;const iv=setInterval(()=>{if(!slides[i].classList.contains('is-active')||k++>62){clearInterval(iv);return;}tr.scrollTop=tr.scrollHeight;},160);}
+    const s=slides[i];
+    if(s.classList.contains('frags')) applyFrags(s,0); else startTrace(s);
   }
-  function go(d){set(i+d)}
+  function go(d){
+    const s=slides[i];
+    if(d>0 && s.classList.contains('frags') && frag<fragMax(s)){frag++;applyFrags(s,frag);if(frag===2)startTrace(s);return;}
+    set(i+d);
+  }
   let notesOn=false;
   addEventListener('keydown',e=>{
     if(e.key==='ArrowRight'||e.key===' ')go(1);
