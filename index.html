@@ -748,10 +748,9 @@
   ];
   let i=0, frag=0, autoTimers=[];
   const clearAuto=()=>{autoTimers.forEach(clearTimeout);autoTimers=[];};
-  // reframe slide auto-plays: left column at 3s, right column 5s after the left conversation finishes (~5.5s playtime)
+  // reframe slide: left column auto-plays at 3s; right column waits for a click (go() advances to frag 2)
   function scheduleReframe(s){
     autoTimers.push(setTimeout(()=>{if(s.classList.contains('is-active')){frag=1;applyFrags(s,1);}},3000));
-    autoTimers.push(setTimeout(()=>{if(s.classList.contains('is-active')){frag=2;applyFrags(s,2);startTrace(s);}},13500));
   }
   const dots=document.getElementById('dots');
   const bm=document.querySelector('.brandmark');
